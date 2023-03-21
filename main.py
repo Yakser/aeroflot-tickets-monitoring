@@ -12,9 +12,9 @@ TELEGRAM_BOT_TOKEN = config("TELEGRAM_BOT_TOKEN", default="hehe, hack me!", cast
 TELEGRAM_CHANNEL = config("TELEGRAM_CHANNEL", default="hehe, hack me again!", cast=int)
 
 
-def get_data(direction='to'):
+def get_data(direction='msk-spb'):
     data = {}
-    if direction == 'to':
+    if direction == 'msk-spb':
         data = {
             "program_id": 40,
             "routes": [
@@ -32,13 +32,49 @@ def get_data(direction='to'):
             ],
             "lang": "ru"
         }
-    elif direction == 'from':
+    elif direction == 'spb-msk':
         data = {
             "program_id": 40,
             "routes": [
                 {
                     "origin": "LED",
                     "destination": "MOW",
+                    "departure_date": "2023-05-09"
+                }
+            ],
+            "passengers": [
+                {
+                    "passenger_type": "youth",
+                    "quantity": 1
+                }
+            ],
+            "lang": "ru"
+        }
+    elif direction == 'srt-msk':
+        data = {
+            "program_id": 40,
+            "routes": [
+                {
+                    "origin": "RTW",
+                    "destination": "MOW",
+                    "departure_date": "2023-05-06"
+                }
+            ],
+            "passengers": [
+                {
+                    "passenger_type": "youth",
+                    "quantity": 1
+                }
+            ],
+            "lang": "ru"
+        }
+    elif direction == 'msk-srt':
+        data = {
+            "program_id": 40,
+            "routes": [
+                {
+                    "origin": "MOW",
+                    "destination": "RTW",
                     "departure_date": "2023-05-09"
                 }
             ],
@@ -62,8 +98,10 @@ def get_data(direction='to'):
 
 def generate_markdown(data, direction):
     direction_to_text = {
-        'to': 'туда',
-        'from': 'обратно',
+        'msk-spb': 'Москва-Питер',
+        'spb-msk': 'Питер-Москва',
+        'msk-srt': 'Москва-Саратов',
+        'srt-msk': 'Саратов-Москва',
     }
     if data['success']:
         data = data['data']
@@ -87,16 +125,20 @@ def send_message(text):
     return requests.post(url, data=data).json()
 
 
-def check_tickets(direction='to'):
+def check_tickets(direction):
     data = get_data(direction)
-    if data['data']['route_min_prices'] or randint(1, 24) == 1 or DEBUG:
-        markdown = generate_markdown(data, direction)
-        send_message(markdown)
+    if data['data']:
+        if data['data']['route_min_prices'] or randint(1, 24) == 1 or DEBUG:
+            markdown = generate_markdown(data, direction)
+            send_message(markdown)
+    else:
+        print(datetime.datetime.now(), data['error'])
 
 
 if __name__ == '__main__':
     while True:
-        check_tickets()
-        check_tickets('from')
+        check_tickets('msk-spb')
+        check_tickets('spb-msk')
+        check_tickets('srt-msk')
+        check_tickets('msk-srt')
         time.sleep(60 * 60)
-
