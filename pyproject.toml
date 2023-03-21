@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "aeroflot-tickets-monitoring"
+version = "0.1.0"
+description = "A simple script that uses aeroflot public API."
+authors = ["Yakser <iaksanov2044@mail.ru>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "aeroflot_tickets_monitoring"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-decouple = "^3.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
