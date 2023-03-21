@@ -21,7 +21,7 @@ def get_data(direction='to'):
                 {
                     "origin": "MOW",
                     "destination": "LED",
-                    "departure_date": "2023-04-06"
+                    "departure_date": "2023-05-06"
                 }
             ],
             "passengers": [
@@ -98,5 +98,5 @@ if __name__ == '__main__':
     while True:
         check_tickets()
         check_tickets('from')
-        time.sleep(60)
+        time.sleep(60 * 60)
 
