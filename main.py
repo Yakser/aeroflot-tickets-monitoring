@@ -1,3 +1,4 @@
+import time
 from random import randint
 import requests
 from decouple import config
@@ -90,5 +91,8 @@ def check_tickets(direction='to'):
 
 
 if __name__ == '__main__':
-    check_tickets()
-    check_tickets('from')
+    while True:
+        check_tickets()
+        check_tickets('from')
+        time.sleep(60)
+
