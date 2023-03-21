@@ -128,9 +128,12 @@ def send_message(text):
 def check_tickets(direction):
     data = get_data(direction)
     if data['data']:
-        if data['data']['route_min_prices'] or randint(1, 24) == 1 or DEBUG:
+        random_value = randint(1, 24)
+        if data['data']['route_min_prices'] or random_value == 1 or DEBUG:
             markdown = generate_markdown(data, direction)
             send_message(markdown)
+        else:
+            print(datetime.datetime.now(), 'нет билетов')
     else:
         print(datetime.datetime.now(), data['error'])
 
