@@ -1,3 +1,4 @@
+import datetime
 import time
 from random import randint
 import requests
@@ -67,9 +68,12 @@ def generate_markdown(data, direction):
     if data['success']:
         data = data['data']
         if data['route_min_prices']:
+            print(datetime.datetime.now(), 'есть билеты')
             return f'*Есть билеты {direction_to_text[direction]}*\n[Купить билет](https://www.aeroflot.ru/sb/subsidized/app/ru-ru#/search?_k=kq1xey)'
         else:
+            print(datetime.datetime.now(), 'нет билетов')
             return f'Билетов {direction_to_text[direction]} всё еще нет :('
+    print(datetime.datetime.now(), 'запрос не удался')
     return f'Запрос на получение билетов {direction_to_text[direction]} не удался :(\n\n\n{data}'
 
 
