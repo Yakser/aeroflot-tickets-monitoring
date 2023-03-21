@@ -5,7 +5,6 @@ description = "A simple script that uses aeroflot public API."
 authors = ["Yakser <iaksanov2044@mail.ru>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "aeroflot_tickets_monitoring"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
